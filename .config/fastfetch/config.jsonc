@@ -3,7 +3,7 @@
     "display": {
         "separator": "  ",
         "constants": [
-            "─────────────────────────" // {$1}, used in Custom module
+            "───────────────────────────" // {$1}, used in Custom module
         ],
         "key": {
             "type": "icon",
@@ -16,7 +16,7 @@
             // {#1} is equivalent to `\u001b[1m`. {#} is equivalent to `\u001b[m`
             "format": "{#38;2;245;194;231}┌{$1} {#1}Hardware {$1}┐{#}"
         },
-        "host",
+        // "host",
         "cpu",
         "gpu",
         "disk",
@@ -41,27 +41,19 @@
         },
         "os",
         "kernel",
+        "initsystem",
         "de",
         "wm",
         "shell",
         "terminal",
-        "terminalfont",
         "packages",
         "uptime",
         "media",
-        {
-            "type": "localip",
-            "compact": true
-        },
+        "localip",
         {
             "type": "custom", // InformationEnd
             "format": "{#38;2;245;194;231}└{$1}──────────{$1}┘{#}"
-        },
-        // {
-            // "type": "colors",
-            // "paddingLeft": 2,
-            // "symbol": "circle"
-        // }
+        }
     ]
 }
 

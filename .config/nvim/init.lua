@@ -43,6 +43,8 @@ vim.opt.list = true
 vim.opt.ignorecase = true
 
 vim.g.rustfmt_autosave = 0
+vim.diagnostic.config({ virtual_text = true })
+-- vim.diagnostic.config({ virtual_lines = true })
 
 ----
 -- Depedencies
@@ -72,7 +74,8 @@ require("lazy").setup({
 
     {
         'nvim-lualine/lualine.nvim',
-        lazy = false,
+        lazy = true,
+        event = "VeryLazy",
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
             require('lualine').setup({
@@ -211,7 +214,10 @@ require("lazy").setup({
                         },
                         diagnostics = {
                             disabled = {"inactive-code"}
-                        }
+                        },
+                        checkOnSave = {
+                            command = "clippy"
+                        },
                     }
                 }
             })
@@ -224,6 +230,7 @@ require("lazy").setup({
 			"neovim/nvim-lspconfig",
 			"saadparwaiz1/cmp_luasnip",
 			"L3MON4D3/LuaSnip",
+            "hrsh7th/cmp-path",
 		},
         lazy = true,
 		event = "InsertEnter",
@@ -285,6 +292,7 @@ require("lazy").setup({
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
+                    { name = "path" },
 				}, {
 					{ name = "buffer" },
 				}),
@@ -402,63 +410,6 @@ require("lazy").setup({
     },
 
     {
-        "nvimdev/dashboard-nvim",
-        -- event = "VimEnter",
-        config = function()
-            require"dashboard".setup {
-                hide = {
-                    statusline = false,
-                    tabline = false,
-                    winbar = false,
-                },
-                config = {
-                    header = {
-[[⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⢋⠹⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣩⣴⣿⣿⣿⣿⣿⣿⣿⣿]],
-[[⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣄⠼⠃⠀⠀⠀⠀⢀⣀⣀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿]],
-[[⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⢔⣛⣻⣭⣭⣭⣛⡛⠶⢿⣿⡻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿]],
-[[⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣴⣾⣿⣿⣿⣿⣤⠶⠶⢮⣦⣀⠀⠉⠛⢽⡻⢿⣿⣿⣿⣿⣿⣿⣿]],
-[[⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢁⣴⣾⣿⣿⣿⣿⢿⣻⣭⣶⣶⣿⣿⣷⣾⣿⣿⣶⣄⡀⠙⢦⠹⣿⣿⣿⡿⣻⢽]],
-[[⠀⠀⠀⠀⡀⠀⡀⠘⠁⣠⣾⣿⣿⣿⡿⣿⣷⣿⢟⣯⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣗⢶⣢⡀⠘⠛⠁⠜⢻⣾]],
-[[⠀⢠⡶⢋⣤⣼⠛⠀⢔⣿⣿⣿⣿⢟⣿⣿⡿⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⢹⣿⡄⢀⡀⣀⣼⣿]],
-[[⠀⠘⢡⣿⣿⡟⠀⢈⣾⢿⣿⡿⢣⣿⡟⠋⢼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⣿⣧⠀⣻⣟⠩⠾]],
-[[⠀⠀⣼⡿⠿⠇⠀⣼⢏⣿⣿⠃⣼⣫⣾⡇⣾⣿⢟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⣿⣿⠀⠸⠟⠀⠒]],
-[[⠀⠀⠈⠁⠀⡀⢸⡟⣸⡟⣟⡐⠛⠛⠿⢿⣿⡏⣼⣿⣿⣇⢿⣿⣿⣿⣿⣿⣿⡿⣿⣿⠇⣿⣿⠀⠀⢀⠀⠀]],
-[[⠀⠀⠀⠀⡰⠁⣿⡇⣿⡇⣿⣿⣟⡁⠀⠀⠘⢀⣿⣿⡟⣼⣮⢿⣿⣿⡿⣿⣿⢳⣿⡿⢰⣿⣿⠀⣸⣿⣿⣆]],
-[[⠀⠀⢠⡈⠀⠀⣿⠀⣿⡇⣿⣿⣿⣿⣶⣶⣾⣦⣿⣿⣷⣿⣏⢸⣿⡿⣿⣮⡋⣼⣿⠃⣾⣿⠉⠀⣿⣿⣿⣿]],
-[[⠀⠀⢸⣿⢰⠀⣿⠀⣿⡇⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠟⢻⣿⡿⣰⡮⠁⣸⣿⣧⠀⣸⣿⣿⣿⣿]],
-[[⠀⠀⠀⢻⠘⠀⠸⠀⢿⡇⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⠀⠀⢀⠙⢵⣋⠄⣴⣿⢫⣤⡠⣻⣿⢿⣿⣿]],
-[[⠀⠀⠀⠘⠀⠀⠀⠀⠘⠳⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣾⣧⡈⢏⣼⣿⡗⢺⢻⡇⢻⣷⣿⣿⠉]],
-[[⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⣿⣿⠟⢉⣴⡿⡫⠊⠀⠀⠀⠀⠀⠛⠉⠋⠀]],
-[[⠀⠃⠀⠀⠀⠀⠀⠀⠱⠤⠴⠀⠙⢿⣿⣿⣿⣿⣿⣿⠛⣛⡫⠽⢧⣴⡿⠋⠊⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀]],
-[[⠀⠐⠛⠳⠀⠀⠀⠀⠀⠶⠴⠀⠀⠀⠉⠉⠉⠉⠉⠉⠉⠁⠀⣰⡿⠋⠀⣴⣶⣾⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀]],
-[[⣀⡙⠛⠀⠀⢀⡄⠀⡐⠰⠧⠆⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠁⠀⢰⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀]],
-[[⣿⣿⣿⣶⣦⣀⣀⣘⠛⠿⠗⢀⣤⢤⠀⠀⠘⠛⠶⠆⠀⢀⡀⠀⠀⠀⠀⠉⠻⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀]],
--- 55x21
-                    },
-                    shortcut = {
-                        { desc = "󰊳 Update", group = "@property", action = "Lazy update", key = "u" },
-                        {
-                            icon = " ",
-                            icon_hl = "@variable",
-                            desc = "Files",
-                            group = "Label",
-                            action = "Telescope find_files",
-                            key = "f",
-                        },
-                        {
-                            icon = "󰩈 ",
-                            desc = "help get me the fuck out of here",
-                            action = "q",
-                            key = "q",
-                        }
-                    },
-                },
-            }
-        end,
-        dependencies = { {'nvim-tree/nvim-web-devicons'}}
-    },
-
-    {
         "filipdutescu/renamer.nvim",
         keys = {
             { "<F2>", "<cmd>lua require ('renamer').rename()<cr>" }
@@ -480,7 +431,57 @@ require("lazy").setup({
             -- TODO: fix icons lmao, please function icon not fakebook
         },
     },
+
+    {
+        'vyfor/cord.nvim',
+        branch = 'master',
+        build = ':Cord update',
+        event = { "BufRead", "BufNewFile" },
+    },
+
+    {
+        "nvzone/showkeys",
+        cmd = "ShowkeysToggle",
+        opts = {
+            timeout = 1,
+            maxkeys = 3,
+        }
+    },
+
+    { "nvzone/volt" },
+
+    { "nvzone/timerly", cmd = "TimerlyToggle" },
+
+    {
+        "nvzone/typr",
+        dependencies = "nvzone/volt",
+        opts = {},
+        cmd = { "Typr", "TyprStats" },
+    },
+
+    {
+        "nvimdev/indentmini.nvim",
+        -- lazy = false,
+        opts = {},
+        event = { "BufRead", "BufNewFile" }
+    },
+    -- {
+    --     "echasnovski/mini.indentscope",
+    --     -- lazy = false,
+    --     event = { "BufRead", "BufNewFile" },
+    --     opts = {
+    --         symbol = '┃',
+    --     },
+    -- }
+
+    -- {
+    --     "nvzone/minty",
+    --     event = "VeryLazy",
+    --     opts = {},
+    -- },
 }, lazy_config);
+vim.cmd.highlight('IndentLine guifg=#313244')
+vim.cmd.highlight('IndentLineCurrent guifg=#cdd6f4')
 
 -- setup must be called before loading
 vim.cmd.colorscheme "catppuccin"
@@ -566,3 +567,4 @@ vim.api.nvim_create_autocmd({"BufFilePost"}, {
         vim.api.nvim_buf_set_option(0, "commentstring", "// %s")
     end,
 })
+

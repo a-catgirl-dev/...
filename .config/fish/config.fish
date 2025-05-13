@@ -31,13 +31,15 @@ export EDITOR=nvim
 
 alias sudo='doas'
 alias v='nvim'
-alias swaps="free -h; echo "\n"; zramctl; echo "\n"; swapon --show"
+alias swaps="free -vmt; echo "\n"; zramctl; echo "\n"; swapon --show"
 alias cd='z'
 alias y='yazi'
 
 alias synctime="sudo systemctl start systemd-timesyncd && sleep 1 && sudo systemctl stop systemd-timesyncd"
 
-alias rec="wf-recorder -a=alsa_output.pci-0000_00_14.2.analog-stereo.monitor -f"
+alias rec="wl-screenrec -b=14MB --audio --audio-device alsa_output.usb-1130_USB_AUDIO-00.analog-stereo.monitor --low-power=off --filename "
+
+alias fatpak="flatpak" # fuck flatpak
 
 alias fastfetch="fastfetch --color '4;95' --logo-color-1 '3;95'"
 

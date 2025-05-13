@@ -1,5 +1,5 @@
 {
-	"layer": "top",
+	"layer": "bottom",
 	"position": "top",
 
 	"modules-left": [
@@ -11,6 +11,12 @@
     ],
 
 	"modules-right": [
+		"custom/arrow-dark",
+		"mpris",
+		"custom/arrow-light",
+		"custom/arrow-dark",
+		"temperature",
+		"custom/arrow-light",
 		"custom/arrow-dark",
 		"pulseaudio",
 		"custom/arrow-light",
@@ -24,9 +30,9 @@
 		"cpu",
 		"custom/arrow-light",
 		"custom/arrow-dark",
-		"battery",
-		"custom/arrow-light",
-		"custom/arrow-dark",
+		// "battery",
+		// "custom/arrow-light",
+		// "custom/arrow-dark",
 		"clock#time",
 		"custom/arrow-light",
 		"custom/arrow-dark",
@@ -156,6 +162,7 @@
 		},
 		"scroll-step": 1,
 		"on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-middle": "pavucontrol",
 		"tooltip": false
 	},
 
@@ -163,6 +170,19 @@
 		"icon-size": 18
 		//"spacing": 10
 	},
+
+    "mpris": {
+        "max-length": 200,
+    },
+
+    "temperature": {
+        // "hwmon-path": ["/sys/class/hwmon/hwmon3/temp1_input", "/sys/class/thermal/thermal_zone1/temp"],
+        //"hwmon-path": ["/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input"],
+        "hwmon-path": ["/run/waybar_hwmon"],
+        "critical-threshold": 80,
+        "format-critical": "{temperatureC}°C ",
+        "format": "{temperatureC}°C "
+    },
 
     "custom/arrow-dark": {
         "format": "",

@@ -36,6 +36,8 @@ unset_main  = { fg = "#1e1e2e", bg = "#f2cdcd", bold = true }
 unset_alt   = { fg = "#f2cdcd", bg = "#313244"}
 
 [status]
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
 separator_open  = ""
 separator_close = ""
 
