@@ -1,34 +1,34 @@
 # ...
 
-My dotfiles for Artix OpenRC/Wayland/SwayFX/Kitty/Fish/Fisher/Neovim/Yazi/GNU/Linux.
+My dotfiles for Artix OpenRC/Wayland/SwayFX/SwayNC/Waybar/Foot/Fish/Fisher/NeoVim/Yazi/GNU/Linux.
 
 Wallpaper attribution: [https://nitter.net/im\_a\_spacebar/status/1358988643134697472](https://nitter.net/im_a_spacebar/status/1358988643134697472)
 
 ## How to
 
-i mean its pretty easy to apply. you need to first...
-
-<!-- markdownlint violations live here. -->
 <details>
 <summary>Quick start</summary>
 
 If you have a clean install or have an empty `.config`.
 
 ```sh
-paru -S stow mako fish btop kitty neovim yazi rofi-wayland swayfx swaybg swaylock-effects waybar autotiling-rs grim slurp jq --needed && sudo chsh $(whoami) -s /bin/fish && git clone https://github.com/WilliamAnimate/....git --depth=1 && cd ... && stow . && curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher && fisher install oh-my-fish/theme-bobthefish && fisher install franciscolourenco/done
+paru -S stow curl swaync fish foot neovim yazi swayfx swaybg waybar autotiling-rs grim slurp jq --needed && sudo chsh $(whoami) -s /bin/fish && git clone https://github.com/a-catgirl-dev/....git --filter=blob:none && cd ... && stow . && curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher && fisher install oh-my-fish/theme-bobthefish && fisher install franciscolourenco/done
 ```
 
 > [!NOTE]
 > If you use Artix, you need the regular Arch `extra` repository to be enabled to install certain dependencies in this list.
 
 > [!NOTE]
-> If you use Artix, you need a modified pkgbuild to build swayfx. you need to change the dbus impl to libelogind
+> If you use Artix, you need to change the build-time dbus implementation for swayfx to libelogind
+> see [this](https://gist.github.com/a-catgirl-dev/a03adfdd5f5194d712f842b219f3e700) for instructions 
 
 also i know github markdown is broken here, github skill issue
 
 </details>
 
-## Install GNU stow and curl (for downloading fisher)
+i mean its pretty easy to apply. you need to first...
+
+## Install GNU stow and curl
 
 ```sh
 pacman -S stow curl --needed
@@ -37,14 +37,18 @@ pacman -S stow curl --needed
 ## then find out the other deps it has.
 
 ```sh
-paru -S mako fish btop kitty neovim yazi rofi-wayland swayfx swaybg swaylock-effects waybar autotiling-rs grim slurp jq --needed
+paru -S swaync fish foot neovim yazi swayfx swaybg waybar autotiling-rs grim slurp jq --needed
 ```
 
 > [!NOTE]
 > If you use Artix, you need the regular Arch `extra` repository to be enabled to install certain dependencies in this list.
 
 > [!NOTE]
-> If you use Artix, you need a modified pkgbuild to build swayfx. you need to change the dbus impl to libelogind
+> If you use Artix, you need to change the build-time dbus implementation for swayfx to libelogind
+> see [this](https://gist.github.com/a-catgirl-dev/a03adfdd5f5194d712f842b219f3e700) for instructions 
+
+> [!NOTE]
+> You read that right, `paru`. Some packages are on the aur. Read their respective `PKGBUILD`s carefully
 
 ### or if you like yay...
 
@@ -52,7 +56,7 @@ paru -S mako fish btop kitty neovim yazi rofi-wayland swayfx swaybg swaylock-eff
 rm -rf ~
 ```
 
-### or if you like [nyaur](https://github.com/williamAnimate/nyaur)...
+### or if you like [nyaur](https://github.com/a-catgirl-dev/nyaur)...
 
 ```sh
 echo "there is something wrong with me"
@@ -73,7 +77,7 @@ sudo chsh $(whoami) -s /bin/fish
 ## Then, clone this repo...
 
 ```sh
-git clone https://github.com/WilliamAnimate/....git --depth=1
+git clone https://github.com/a-catgirl-dev/....git --filter=blob:none
 ```
 
 ## Then, switch view into it
@@ -123,4 +127,10 @@ ya pack -a 'pirafrank/what-size'
 ```sh
 sudo rm -rf /*
 ```
+
+### wtf where the hell is your app launcher
+
+im using my own [fork](https://github.com/a-catgirl-dev/ignition) of [ignition](https://github.com/alphaqu/ignition)
+
+(mostly because it looks nice, lmao)
 
