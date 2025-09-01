@@ -6,6 +6,12 @@ if [ (tty) = "/dev/tty1" ]
     export XDG_SESSION_DESKTOP sway
     export WLR_NO_HARDWARE_CURSORS 1
     export WLR_NO_SCANOUT 1
+
+    # pipewire &
+    # pipewire-pulse &
+    # wireplumber &
+
     exec dbus-run-session sway
+    # exec dbus-run-session niri > output.log ^&1
 end
 

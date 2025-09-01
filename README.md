@@ -1,18 +1,12 @@
 # ...
 
-My dotfiles for Artix OpenRC/Wayland/SwayFX/Kitty/Fish/Fisher/nvim/Yazi/GNU/Linux.
+My dotfiles for Artix OpenRC/Wayland/SwayFX/Kitty/Fish/Fisher/Neovim/Yazi/GNU/Linux.
 
-(SystemD users accepted[^1] too- but requires slight modifications)
-
-![without rofi](./howitlooks/20241124.png)
-![with rofi](./howitlooks/20241124-rofi.png)
-
-[^1]: Not really. I don't accept you guys[^2]. SystemD sucks and you should never use it, but init freedom is about using whatever init you want, including SystemD. If you are content with systemd (ew), then keep doing your thing.
-[^2]: That's a joke. I'm just not a fan of SystemD.
+Wallpaper attribution: [https://nitter.net/im\_a\_spacebar/status/1358988643134697472](https://nitter.net/im_a_spacebar/status/1358988643134697472)
 
 ## How to
 
-i mean its pretty easy to apply. you need to first... 
+i mean its pretty easy to apply. you need to first...
 
 <!-- markdownlint violations live here. -->
 <details>

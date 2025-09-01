@@ -1,0 +1,12 @@
+[[plugin.deps]]
+use = "pirafrank/what-size"
+rev = "d896656"
+hash = "62251f94eb67648d42cdfcfb8be0fad2"
+
+[[plugin.deps]]
+use = "orhnk/system-clipboard"
+rev = "efb8f03"
+hash = "594647a13d23b416cd287c7b21c43b02"
+
+[flavor]
+deps = []

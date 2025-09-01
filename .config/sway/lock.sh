@@ -31,4 +31,4 @@ hyprlock -c ~/.config/hyprlock/hyprlock.conf
 #     --inside-ver-color $VERIFYING \
 #     --inside-wrong-color $WRONG \
 #     --text-wrong-color $WHAT \
-#     --ring-wrong-color $WRONG \
+#     --ring-wrong-color $WRONG

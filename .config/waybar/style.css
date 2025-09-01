@@ -38,8 +38,8 @@
     border: none;
     border-radius: 0;
     min-height: 0;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     box-shadow: none;
     text-shadow: none;
     icon-shadow: none;
@@ -47,16 +47,19 @@
 
 /* The whole bar */
 #waybar {
-    background: rgba(30, 30, 46, 100); /* 1e1e2e */
+    /* background: rgba(30, 30, 46, 100); */
+    /* 1e1e2e */
+    background: @bg2;
     color: @white;
-    /* font-size: 14.5; */
-    font-size: 15.5;
+    font-size: 15px;
+    /* font-size: 15.5; */
     font-family: "fira code nerd font";
     /* font-family: "fira code"; */
 }
 
 /* Each module */
-#pulseaudio,
+#custom-user,
+#wireplumber,
 #battery,
 #clock,
 #cpu,
@@ -75,24 +78,36 @@
     padding-right: 8pt;
 }
 
-/* Each critical module */
-#mode
-/* #battery.critical.discharging { */
-{
-    animation-timing-function: cubic-bezier(1, 0, 0, 1);
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-name: blink-critical;
-    animation-duration: 1s;
+#scratchpad {
+    background: @surface0;
 }
 
-/* Each warning */
-/* #network.disconnected, */
-/* #memory.warning, */
-/* #cpu.warning, */
-/* #battery.warning.discharging { */
-/*     color: @warning; */
+/* Each critical module */
+/* #mode */
+/* #battery.critical.discharging { */
+/* { */
+    /* animation-timing-function: cubic-bezier(1, 0, 0, 1); */
+    /* animation-iteration-count: infinite; */
+    /* animation-direction: alternate; */
+    /* animation-name: blink-critical; */
+    /* animation-duration: 1s; */
 /* } */
+
+/* each warning */
+#network.disconnected,
+#memory.warning,
+#cpu.warning,
+#battery.warning.discharging {
+    color: @warning;
+}
+
+/* and its respective critical */
+#memory.critical,
+#cpu.critical,
+#temperature.critical,
+#battery.warning.critical {
+    color: @red;
+}
 
 /* Current sway mode (resize etc) */
 #mode {
@@ -106,7 +121,7 @@
     padding-left: 2pt;
     padding-right: 2pt;
     color: @white;
-    background: @black;
+    background: @surface0;
 }
 
 /* Inactive (on unfocused output) */
@@ -131,15 +146,28 @@
 }
 
 #window {
-    margin-right: 35pt;
-    margin-left: 35pt;
+    /* window really needs these */
+    padding-left: 15px;
+    padding-right: 15px;
+    background: @surface0;
 }
 
 #mpris {
     min-width: 40px;
 }
+#mpris.stopped {
+    min-width: 40px;
 
-#pulseaudio,
+    /* padding-left: 15px; */
+    /* padding-right: 15px; */
+
+    padding-left: 8pt;
+    padding-right: 8pt;
+}
+
+/* #window, */
+#custom-user,
+#wireplumber,
 #network,
 #memory,
 #cpu,
@@ -149,16 +177,42 @@
 #mpris,
 #temperature {
     color: @white;
-    background: @black;
+    background: @surface0;
 }
 
+#custom-ws-arrow-dark-window,
 #custom-ws-arrow-dark,
+#custom-arrow-dark-mpris,
+#custom-ws-arrow-dark-mpris,
 #custom-arrow-dark {
-    color: @black;
+    color: @surface0;
 }
 
+#custom-ws-arrow-light-window,
+#custom-ws-arrow-light,
 #custom-arrow-light {
-    color: rgba(30, 30, 46, 100); /* 1e1e2e */
-    background: @black;
+    color: rgba(30, 30, 46, 100);
+    color: @bg2;
+    background: @surface0;
+}
+
+/* window#waybar.empty #window #custom-ws-arrow-dark-window #custom-ws-arrow-light-window { */
+/* hide entire module if nothing is shown */
+window#waybar.empty #window,
+window#waybar.empty #custom-ws-arrow-dark-window,
+window#waybar.empty #custom-ws-arrow-light-window {
+    all: unset; /* possibly. might fix desktop gtk?
+                 * if not, just find the default styles instead
+                 * of the catppuccin ones and maybe it'll work */
+    color: transparent;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+
+#mpris.disconnected {
+    background: white;
+    padding: 42px;
 }
 

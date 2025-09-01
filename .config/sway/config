@@ -2,7 +2,7 @@
 set $mod Mod4
 
 # set $scaling_factor 1
-# output DP-1 scale 3.14159
+# output DP-1 scale 3.141592
 # output DP-1 scale_filter smart
 output DP-1 adaptive_sync on
 # output DP-1 resolution 1920x1080
@@ -10,80 +10,15 @@ output DP-1 mode 2560x1440@165Hz
 # output DP-1 mode 1920x1080@120Hz
 # exec_always ---no-startup-id xwayland-scale --scale=$scaling_factor
 
-#output * bg ~/Polarnight_c.jpg fill
-# output * bg ~/chiptune_hell_recolored.png fill
-# output * bg ~/1710282336789004.png fill
-output * bg ~/0cc33b08f18d7712e5609cb6b802df59.jpg fill
-# output * bg ~/y.jpg fill
-# output * bg ~/eepy mita.jpg fill
-# output * bg ~/wallhaven-kxrwj1.png fill
-# output * bg ~/shouldntyoubeworking.png fill
-# output * bg ~/1740183944470199.png fill
-# output * bg ~/Downloads/Wallpapers/Anime/epic red.png fill
+# output * bg ~/entity.jpg fill
+
+# mqaybe
+# corner_radius 5
+
 # exec_always swaybg -i ~/glorious\ leo.jpg
 exec autotiling-rs
 
 seat seat0 xcursor_theme catppuccin-mocha-pink-cursors
-
-set $ws1 1
-set $ws2 2
-set $ws3 3
-set $ws4 4
-set $ws5 5
-set $ws6 6
-set $ws7 7
-set $ws8 8
-set $ws9 9
-set $ws10 10
-
-# switch to workspace
-bindsym $mod+1 workspace number $ws1
-bindsym $mod+2 workspace number $ws2
-bindsym $mod+3 workspace number $ws3
-bindsym $mod+4 workspace number $ws4
-bindsym $mod+5 workspace number $ws5
-bindsym $mod+6 workspace number $ws6
-bindsym $mod+7 workspace number $ws7
-bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
-
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
-
-# hide titlebar if not tabbed
-for_window [app_id="^.*"] border pixel 2
-
-# hack fix, until mozilla gets their SHIT TOGETHER
-# for_window [app_id="LibreWolf"] floating disable
-# for_window [app_id="LibreWolf"] resize set width 80 ppt height 80 ppt
-
-# move applications to workspaces
-# for_window [app_id="LibreWolf"] move to workspace $ws2
-for_window [class="steam"] move to workspace $ws5
-for_window [app_id="vesktop"] move to workspace $ws4
-
-for_window [app_id="thunar"] floating enable
-for_window [title="Ignition"] floating enable
-for_window [title="Ignition"] blur enable
-for_window [title="Ignition"] border pixel 0
-# for_window [title="Ignition"] blur_passes 3
-# for_window [title="Ignition"] blur_radius 3
-# for_window [app_id="vesktop"] blur enable
-for_window [app_id="kitty"] blur enable
-for_window [app_id="dev.zed.Zed"] blur enable
-
-# for_window [title="^.*"] blur_passes 3
-# for_window [title="^.*"] blur_radius 3
 
 # move focused to scratchpad
 bindsym $mod+Shift+minus move scratchpad
@@ -91,14 +26,6 @@ bindsym $mod+Shift+minus move scratchpad
 # show next scratchpad thing
 # idfk if its fifo queue its 10:25 im going insane
 bindsym $mod+minus scratchpad show
-
-# wtf wayland is xorg?
-input "2:14:ETPS/2_Elantech_Touchpad" {
-    tap enabled
-    natural_scroll enabled
-    middle_emulation enabled
-    dwt disabled
-}
 
 # nice (no not the priority thing)
 # not nice.
@@ -119,7 +46,9 @@ exec swaync
 exec pipewire
 exec pipewire-pulse
 exec wireplumber
-exec activate-linux
+# exec activate-linux
+exec foot -s
+exec ~/.config/sway/init.sh
 
 bindsym $mod+a exec swaync-client -t
 
@@ -135,16 +64,19 @@ floating_modifier $mod
 
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec kitty -1
+bindsym $mod+Return exec footclient
 bindsym $mod+b exec "gio launch /usr/share/applications/librewolf.desktop"
 # bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start rofi, a program launcher
 # bindsym $mod+d exec "rofi -modi drun,run -show drun"
 bindsym $mod+d exec "ignition"
+
+bindsym $mod+Alt+q exec ~/.config/sway/lock.sh
+bindsym $mod+Shift+o exec "swaymsg output DP-1 dpms off"
+bindsym $mod+Shift+p exec "swaymsg output DP-1 dpms on"
 
 # focus on windows
 bindsym $mod+Left focus left
@@ -169,6 +101,9 @@ bindsym $mod+Shift+L move right
 # split in vertical orientation
 bindsym $mod+v split v
 
+bindsym $mod+m exec "killall -SIGUSR1 waybar"
+bindsym $mod+p exec "wleave"
+
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
@@ -187,38 +122,6 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r exec "swaymsg reload"
 bindsym $mod+Shift+e exec "swaynag -t warning -m 'Log off?' -B 'Send me back to the tty!' 'sway exit'"
 
-# resize window (you can also use the mouse for that, but thats cringe)
-mode "resize" {
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
-    bindsym H resize shrink width 10 px or 10 ppt
-    bindsym J resize grow height 10 px or 10 ppt
-    bindsym K resize shrink height 10 px or 10 ppt
-    bindsym L resize grow width 10 px or 10 ppt
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym $mod+r mode "default"
-}
-
-bindsym $mod+r mode "resize"
-
-# or... make a power menu in waybar properly?
-mode "power" {
-    bindsym s exec ~/.config/sway/lock.sh, mode "default", exec loginctl suspend
-    bindsym l exec ~/.config/sway/lock.sh, mode "default"
-    bindsym $mod+h exec loginctl poweroff
-    bindsym $mod+r exec loginctl reboot
-
-    bindsym Escape mode "default"
-    bindsym Return mode "default"
-    bindsym $mod+p mode "default"
-}
-
-bindsym $mod+p mode "power"
-
 bar {
     # this shit bloated as hell what the fuck
     swaybar_command waybar
@@ -229,11 +132,7 @@ set $bgcolor	#1e1e2e99
 set $in-bgcolor #0000004d
 set $text	    #11111b
 set $u-bgcolor	#fab387
-set $indicator	#cba6f7
 set $in-text	#cdd6f4
-set $focused-ws	#f5c2e7
-set $bar-color	#0000004d
-# set $bar-color	#000000
 
 set $bordercolor-app #f5c2e7
 
@@ -255,4 +154,6 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 # non-adjustable gaps because you don't need to adjust it, obviously
 gaps inner 4
 gaps outer 0
+
+include ~/.config/sway/conf.d/*
 

@@ -1,71 +1,82 @@
 {
-	"layer": "bottom",
-	"position": "top",
+    "layer": "bottom",
+    "position": "top",
 
-	"modules-left": [
-		"sway/mode",
-		"sway/workspaces",
-		"custom/ws-arrow-dark",
-		"sway/window",
-        "sway/scratchpad"
+    "modules-left": [
+        "sway/mode",
+        "sway/workspaces",
+        "custom/ws-arrow-dark",
+        "custom/ws-arrow-light",
+        "sway/scratchpad",
+        "custom/ws-arrow-dark",
+        "custom/ws-arrow-light-window",
+        "sway/window",
+        "custom/ws-arrow-dark-window"
+        //"custom/ws-arrow-light",
+        //"custom/user",
+        //"custom/ws-arrow-dark",
     ],
 
-	"modules-right": [
-		"custom/arrow-dark",
-		"mpris",
-		"custom/arrow-light",
-		"custom/arrow-dark",
-		"temperature",
-		"custom/arrow-light",
-		"custom/arrow-dark",
-		"pulseaudio",
-		"custom/arrow-light",
-		"custom/arrow-dark",
-		"network",
-		"custom/arrow-light",
-		"custom/arrow-dark",
-		"memory",
-		"custom/arrow-light",
-		"custom/arrow-dark",
-		"cpu",
-		"custom/arrow-light",
-		"custom/arrow-dark",
-		// "battery",
-		// "custom/arrow-light",
-		// "custom/arrow-dark",
-		"clock#time",
-		"custom/arrow-light",
-		"custom/arrow-dark",
-		"tray",
-	],
+    "modules-center": [
+        "custom/arrow-dark",
+        "mpris",
+        "custom/ws-arrow-dark",
+    ],
 
-	// Modules
+    "modules-right": [
+        "custom/arrow-dark",
+        "temperature",
+        "custom/arrow-light",
+        "custom/arrow-dark",
+        //"pulseaudio",
+        "wireplumber",
+        "custom/arrow-light",
+        "custom/arrow-dark",
+        "network",
+        "custom/arrow-light",
+        "custom/arrow-dark",
+        "memory",
+        "custom/arrow-light",
+        "custom/arrow-dark",
+        "cpu",
+        "custom/arrow-light",
+        "custom/arrow-dark",
+        //"battery",
+        //"custom/arrow-light",
+        //"custom/arrow-dark",
+        "clock#time",
+        "custom/arrow-light",
+        "custom/arrow-dark",
+        "tray",
+    ],
 
-	"battery": {
-		"interval": 10,
-		"states": {
-			"warning": 30,
-			"critical": 15
-		},
-		"format-time": "{H}:{M:02}",
-		"format": "{icon} {capacity}% ({time})",
-		"format-charging": " {capacity}% ({time})",
-		"format-charging-full": " {capacity}%",
-		"format-full": "{icon} {capacity}%",
-		"format-alt": "{icon} {power}W",
-		"format-icons": [
-			"",
-			"",
-			"",
-			"",
-			""
-		],
-		"tooltip": false
-	},
+    // Modules
 
-	"clock#time": {
-		"interval": 10,
-		"format": "{:%I:%M %p}",
+    "battery": {
+        "interval": 10,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format-time": "{H}:{M:02}",
+        "format": "{icon} {capacity}% ({time})",
+        "format-charging": " {capacity}% ({time})",
+        "format-charging-full": " {capacity}%",
+        "format-full": "{icon} {capacity}%",
+        "format-alt": "{icon} {power}W",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "tooltip": false
+    },
+
+    "clock#time": {
+        "interval": 10,
+        "format": "󰥔 {:%I:%M %p}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode"          : "year",
@@ -74,6 +85,7 @@
             "on-scroll"     : 1,
             "on-click-right": "mode",
             "format": {
+                // TODO: catppuccin
                 "months":     "<span color='#ffead3'><b>{}</b></span>",
                 "days":       "<span color='#ecc6d9'><b>{}</b></span>",
                 "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
@@ -88,91 +100,107 @@
             "on-scroll-up": "shift_up",
             "on-scroll-down": "shift_down"
         }
-	},
+    },
 
-	"cpu": {
-		"interval": 5,
-		"tooltip": false,
-		"format": " {usage}%",
-		"format-alt": " {load}",
-		"states": {
-			"warning": 70,
-			"critical": 90
-		}
-	},
+    "cpu": {
+        "interval": 5,
+        "tooltip": false,
+        "format": " {usage}%",
+        "format-alt": " {load}",
+        "states": {
+            "warning": 80,
+            "critical": 90,
+        }
+    },
 
-	"memory": {
-		"interval": 5,
-		"format": " {used:0.1f}G/{total:0.1f}G",
-		"states": {
-			"warning": 70,
-			"critical": 90
-		},
-		"tooltip": false
-	},
+    "memory": {
+        "interval": 5,
+        //"format": " {used:0.2f}G/{total:0.1f}G",
+        "format": "  {used:0.2f}G/{total:0.1f}G",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        },
+        "tooltip": false
+    },
 
-	"network": {
-		"interval": 5,
+    "network": {
+        "interval": 5,
         "interface": "wlan0",
-		"format-wifi": "  ({signalStrength}%)",
-		"format-ethernet": " {ifname}",
-		"format-disconnected": "No connection",
-		"format-alt": " {ipaddr}/{cidr}",
-		"tooltip": false
-	},
+        "format-wifi": "  ({signalStrength}%)",
+        //"format": "  ({signalStrength}%)",
+        "format": "({signalStrength}%)",
+        "format-ethernet": " {ifname}",
+        "format-disconnected": "No connection",
+        "format-alt": " {ipaddr}/{cidr}",
+        "tooltip": false
+    },
+
+    "custom/user": {
+        "exec": "echo  $(whoami)@$(hostname)",
+        "interval": 86400,
+        "height": 30,
+        "width": 30,
+        "icon": true,
+    },
 
     "sway/scratchpad": {
         "format": "{icon} {count}",
-        "show-empty": false,
-        "format-icons": ["", ""],
+        "show-empty": true,
+        "format-icons": ["", ""],
         "tooltip": true,
         "tooltip-format": "{app}: {title}"
     },
 
-	"sway/mode": {
-		"format": "{}",
-		"tooltip": false
-	},
+    "sway/mode": {
+        "format": "{}",
+        "tooltip": false
+    },
 
-	"sway/window": {
-		"format": "{}",
-		"max-length": 30,
-		"tooltip": false
-	},
+    "sway/window": {
+        "format": "{}",
+        "max-length": 30,
+        "tooltip": false,
+        "icon": true,
+        "icon-size": 19
+    },
 
-	"sway/workspaces": {
-		"disable-scroll-wraparound": true,
-		"smooth-scrolling-threshold": 4,
-		"enable-bar-scroll": true,
-		"format": "{name}"
-	},
+    "sway/workspaces": {
+        "disable-scroll-wraparound": true,
+        "smooth-scrolling-threshold": 4,
+        "enable-bar-scroll": true,
+        "format": "{name}"
+    },
 
-	"pulseaudio": {
-		"format": "{icon} {volume}%",
-		"format-bluetooth": "{icon} {volume}%",
-		"format-muted": "",
-		"format-icons": {
-			"headphone": "",
-			"hands-free": "",
-			"headset": "",
-			"phone": "",
-			"portable": "",
-			"car": "",
-			"default": ["", ""]
-		},
-		"scroll-step": 1,
-		"on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "wireplumber": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "scroll-step": 1,
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
         "on-click-middle": "pavucontrol",
-		"tooltip": false
-	},
+        "tooltip": false
+    },
 
-	"tray": {
-		"icon-size": 18
-		//"spacing": 10
-	},
+    "tray": {
+        "icon-size": 15
+        //"spacing": 10
+    },
 
     "mpris": {
         "max-length": 200,
+        "format": " {player} ({status}) {dynamic}",
+        "format-stopped": " Nothing playing {title} {player} ({status}) {dynamic}",
+        //"format-when-offline": "Nothing playing",
     },
 
     "temperature": {
@@ -181,7 +209,7 @@
         "hwmon-path": ["/run/waybar_hwmon"],
         "critical-threshold": 80,
         "format-critical": "{temperatureC}°C ",
-        "format": "{temperatureC}°C "
+        "format": " {temperatureC}°C"
     },
 
     "custom/arrow-dark": {
@@ -195,6 +223,22 @@
     },
 
     "custom/ws-arrow-dark": {
+        "format": "",
+        "tooltip": false
+    },
+
+    "custom/ws-arrow-light": {
+        "format": "",
+        "tooltip": false
+    },
+
+    // hack because waybar is confusing
+    "custom/ws-arrow-dark-window": {
+        "format": "",
+        "tooltip": false
+    },
+
+    "custom/ws-arrow-light-window": {
         "format": "",
         "tooltip": false
     },

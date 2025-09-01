@@ -1,20 +1,13 @@
 ----
 -- Options
 ----
-vim.opt.showmode = false
-vim.opt.endoffile = false
-vim.opt.endofline = false
-
-vim.opt.ruler = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
 vim.opt.autoindent = true
 
-vim.opt.autowrite = true
 vim.opt.swapfile = false
 
-vim.opt.wrap = true
 vim.opt.scrolloff = 2
 vim.opt.sidescrolloff = 30
 
@@ -43,7 +36,13 @@ vim.opt.list = true
 vim.opt.ignorecase = true
 
 vim.g.rustfmt_autosave = 0
+vim.opt.colorcolumn = "120"
 vim.diagnostic.config({ virtual_text = true })
+
+vim.o.laststatus=3
+
+vim.o.winborder = "rounded"
+
 -- vim.diagnostic.config({ virtual_lines = true })
 
 ----
@@ -84,17 +83,10 @@ require("lazy").setup({
                     lualine_a = {'mode'},
                     lualine_b = {'branch', 'diff'},
                     lualine_c = {'filename', 'diagnostics'},
-                    lualine_x = {"require'lsp-status'.status()", 'filetype'},
+                    -- lualine_x = {"require'lsp-status'.status()", 'filetype'},
+                    lualine_x = {},
                     lualine_y = {'progress'},
                     lualine_z = {'location'},
-                },
-                inactive_sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = {'filename'},
-                    lualine_x = {'location'},
-                    lualine_y = {},
-                    lualine_z = {}
                 },
             })
         end
@@ -157,26 +149,26 @@ require("lazy").setup({
         end
     },
 
-	{
-		"nvim-treesitter/nvim-treesitter",
-		lazy = true,
-		build = ":TSUpdate",
-		config = function ()
-			local configs = require("nvim-treesitter.configs")
-			configs.setup({ 
-				sync_install = false,
-				highlight = { enable = true },
-				incremental_selection = {
-					enable = true,
-					keymaps = {
-						init_selection = "<C-space>",  -- Start selection
-						node_incremental = "<C-space>", -- Increment selection to the node
-						node_decremental = "<BS>",       -- Decrement selection to previous node
-					},
-				},
-			})
-		end,
-	},
+	-- {
+	-- 	"nvim-treesitter/nvim-treesitter",
+	-- 	lazy = true,
+	-- 	build = ":TSUpdate",
+	-- 	config = function ()
+	-- 		local configs = require("nvim-treesitter.configs")
+	-- 		configs.setup({ 
+	-- 			sync_install = false,
+	-- 			highlight = { enable = true },
+	-- 			incremental_selection = {
+	-- 				enable = true,
+	-- 				keymaps = {
+	-- 					init_selection = "<C-space>",  -- Start selection
+	-- 					node_incremental = "<C-space>", -- Increment selection to the node
+	-- 					node_decremental = "<BS>",       -- Decrement selection to previous node
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 
 	{
 		"neovim/nvim-lspconfig",
@@ -191,7 +183,7 @@ require("lazy").setup({
 		},
 		config = function ()
 			-- local lsps = { "clangd", "gopls", "rust_analyzer" }
-			local lsps = { "clangd", "gopls" }
+			local lsps = { "clangd", "gopls", "zls" }
 			local lspconfig = require("lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local root = lspconfig.util.root_pattern(".git", "compile_flags.txt", "go.mod", "Gopkg.lock", ".")
@@ -209,13 +201,14 @@ require("lazy").setup({
                 capabilities = capabilities,
                 settings = {
                     ["rust-analyzer"] = {
-                        cargo = {
-                            allFeatures = true,
-                        },
-                        diagnostics = {
-                            disabled = {"inactive-code"}
-                        },
-                        checkOnSave = {
+                        -- cargo = {
+                        --     allFeatures = true,
+                        -- },
+                        -- diagnostics = {
+                        --     disabled = {"inactive-code"}
+                        -- },
+                        checkOnSave = true,
+                        check = {
                             command = "clippy"
                         },
                     }
@@ -227,8 +220,8 @@ require("lazy").setup({
 	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
-			"neovim/nvim-lspconfig",
-			"saadparwaiz1/cmp_luasnip",
+			-- "neovim/nvim-lspconfig",
+			-- "saadparwaiz1/cmp_luasnip",
 			"L3MON4D3/LuaSnip",
             "hrsh7th/cmp-path",
 		},
@@ -243,22 +236,22 @@ require("lazy").setup({
 				return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 			end
 
-			local s = snip.snippet
-			local t = snip.text_node
-			local i = snip.insert_node
+			-- local s = snip.snippet
+			-- local t = snip.text_node
+			-- local i = snip.insert_node
 
-			snip.add_snippets("go", { 
-				s("iferr", {
-					t({"if err != nil {", "\t"}),
-					i(1),
-					t({"", "}"})
-				}),
-				s("reterr", {
-					t("return "),
-					i(1),
-					t("err")
-				})
-			})
+			-- snip.add_snippets("go", { 
+			-- 	s("iferr", {
+			-- 		t({"if err != nil {", "\t"}),
+			-- 		i(1),
+			-- 		t({"", "}"})
+			-- 	}),
+			-- 	s("reterr", {
+			-- 		t("return "),
+			-- 		i(1),
+			-- 		t("err")
+			-- 	})
+			-- })
 
 			cmp.setup({
 				mapping = {
@@ -410,14 +403,6 @@ require("lazy").setup({
     },
 
     {
-        "filipdutescu/renamer.nvim",
-        keys = {
-            { "<F2>", "<cmd>lua require ('renamer').rename()<cr>" }
-        },
-        opts = {}
-    },
-
-    {
         "hedyhli/outline.nvim",
         lazy = true,
         cmd = { "Outline", "OutlineOpen" },
@@ -439,25 +424,25 @@ require("lazy").setup({
         event = { "BufRead", "BufNewFile" },
     },
 
-    {
-        "nvzone/showkeys",
-        cmd = "ShowkeysToggle",
-        opts = {
-            timeout = 1,
-            maxkeys = 3,
-        }
-    },
+    -- {
+    --     "nvzone/showkeys",
+    --     cmd = "ShowkeysToggle",
+    --     opts = {
+    --         timeout = 1,
+    --         maxkeys = 5,
+    --     }
+    -- },
 
-    { "nvzone/volt" },
+    -- { "nvzone/volt" },
 
-    { "nvzone/timerly", cmd = "TimerlyToggle" },
+    -- { "nvzone/timerly", cmd = "TimerlyToggle" },
 
-    {
-        "nvzone/typr",
-        dependencies = "nvzone/volt",
-        opts = {},
-        cmd = { "Typr", "TyprStats" },
-    },
+    -- {
+    --     "nvzone/typr",
+    --     dependencies = "nvzone/volt",
+    --     opts = {},
+    --     cmd = { "Typr", "TyprStats" },
+    -- },
 
     {
         "nvimdev/indentmini.nvim",
@@ -472,6 +457,18 @@ require("lazy").setup({
     --     opts = {
     --         symbol = '┃',
     --     },
+    -- },
+
+    -- {
+    --     "lukas-reineke/indent-blankline.nvim",
+    --     lazy = false,
+    --     event = { "BufRead", "BufNewFile" },
+    --     main = "ibl",
+    --     ---@module "ibl"
+    --     ---@type ibl.config
+    --     -- opts = {
+    --     --     scope = { highlight = "#f5c2e7" }
+    --     -- },
     -- }
 
     -- {
@@ -480,8 +477,13 @@ require("lazy").setup({
     --     opts = {},
     -- },
 }, lazy_config);
-vim.cmd.highlight('IndentLine guifg=#313244')
+vim.cmd.highlight('IndentLine guifg=#6c7086')
 vim.cmd.highlight('IndentLineCurrent guifg=#cdd6f4')
+vim.opt.cursorline = true
+vim.api.nvim_set_hl(0, "LineNrAbove",  { fg = "#6c7086", bold = false })
+vim.api.nvim_set_hl(0, "LineNr",       { fg = "#cdd6f4", bold = true })
+vim.api.nvim_set_hl(0, "LineNrBelow",  { fg = "#6c7086", bold = false })
+-- vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#cdd6f4", bold = false })
 
 -- setup must be called before loading
 vim.cmd.colorscheme "catppuccin"
