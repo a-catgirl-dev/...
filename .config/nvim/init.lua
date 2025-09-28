@@ -172,8 +172,8 @@ require("lazy").setup({
 
 	{
 		"neovim/nvim-lspconfig",
-		lazy = true,
-		event = { "BufRead", "BufNewFile" },
+		lazy = false,
+		-- event = { "BufRead", "BufNewFile" },
         -- only start when insert mode
         -- this is because i sometimes browse files, but i dont want to start the diagnostics (because it will absolutely lag the shit out of my system)
         --  aaactually nvm this doesnt work. seems like it must fire when that happens.
