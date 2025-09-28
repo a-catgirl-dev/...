@@ -181,41 +181,37 @@ require("lazy").setup({
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 		},
-		config = function ()
-			-- local lsps = { "clangd", "gopls", "rust_analyzer" }
-			local lsps = { "clangd", "gopls", "zls" }
-			local lspconfig = require("lspconfig")
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			local root = lspconfig.util.root_pattern(".git", "compile_flags.txt", "go.mod", "Gopkg.lock", ".")
+        config = function()
+            local cmp_caps = require("cmp_nvim_lsp").default_capabilities()
 
-			for _, s in pairs(lsps) do
-				lspconfig[s].setup {
-					root_dir = root,
-					capabilities = capabilities,
-				}
-			end
-            -- disable annoying as fuck disabled code lint. i already fucking know that no ide autocomplete cause not if cfg! and shit
-            -- tradeoff: it doesn't color it.
-            lspconfig.rust_analyzer.setup({
-                cmd = {"rust-analyzer"},
-                capabilities = capabilities,
-                settings = {
-                    ["rust-analyzer"] = {
-                        -- cargo = {
-                        --     allFeatures = true,
-                        -- },
-                        -- diagnostics = {
-                        --     disabled = {"inactive-code"}
-                        -- },
-                        checkOnSave = true,
-                        check = {
-                            command = "clippy"
-                        },
+            vim.lsp.config["*"] = {
+                capabilities = cmp_caps,
+            }
+
+            local servers = { "clangd", "gopls", "zls" }
+            for _, srv in ipairs(servers) do
+                vim.lsp.enable(srv)
+            end
+
+            -- override rust cfg
+            vim.lsp.config["rust_analyzer"] = vim.tbl_extend("force",
+                vim.lsp.config["rust_analyzer"] or {},
+                {
+                    cmd = { "rust-analyzer" },
+                    settings = {
+                        ["rust-analyzer"] = {
+                            checkOnSave = true,
+                            check = {
+                                command = "clippy",
+                            }
+                        }
                     }
                 }
-            })
-		end,
-	},
+            )
+            -- then enable it
+            vim.lsp.enable("rust_analyzer")
+        end,
+    },
 
 	{
 		"hrsh7th/nvim-cmp",
