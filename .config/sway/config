@@ -15,6 +15,9 @@ output DP-1 mode 2560x1440@165Hz
 # mqaybe
 # corner_radius 5
 
+# agetty autologin; this is the lock screen
+exec ~/.config/sway/lock.sh
+
 # exec_always swaybg -i ~/glorious\ leo.jpg
 exec autotiling-rs
 
