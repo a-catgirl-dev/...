@@ -1,6 +1,6 @@
 zoxide init fish | source
 
-if test "$TERM" = "xterm-kitty"
+if test "$TERM" = "kitty"
     # nothing
 else
     if type -q tmux; and test -z "$TMUX"
