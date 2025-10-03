@@ -4,6 +4,9 @@ My dotfiles for Artix OpenRC/Wayland/SwayFX/SwayNC/Waybar/Foot/Fish/Fisher/NeoVi
 
 Wallpaper attribution: [https://nitter.net/im\_a\_spacebar/status/1358988643134697472](https://nitter.net/im_a_spacebar/status/1358988643134697472)
 
+Note that you should probably read this entire document just to be safe. Especially the
+[Autologin/Why does hyprlock start when i log in](#Autologin/Why does hyprlock start when i log in) section.
+
 ## How to
 
 <details>
@@ -110,9 +113,9 @@ fisher is used over omf because omf is deprecated and unmaintained.
 
 idk where to find it. perhaps [google](https://google.com) it yourself. (or [duckduckgo](https://duckduckgo.com) it yourself)
 
-## Further configuration
+## Further configuration, troubleshooting, etc etc etc
 
-more bloat! woooooooooooo
+Make it yours, not mine.
 
 ### Yazi: add what-size plugin for yazi
 
@@ -121,6 +124,23 @@ Trigger it with `.s`. You can configure it in `.config/yazi/keymap.toml`
 ```sh
 ya pack -a 'pirafrank/what-size'
 ```
+
+### Autologin/Why does hyprlock start when i log in
+
+My personal `agetty.tty1` configuration automagically logs me in and shows the same login screen as my lock screen, which
+is already better than KDE plasma's SDDM and whatever lock screen they use for the actual desktop (they're inconsistent).
+
+You can avoid this by opening up `~/.config/sway/config` and remove the `exec ~/.config/sway/lock.sh`. It is probably
+at the top.
+
+As for **autologin**, you can open up `/etc/conf.d/agetty.tty1` and set `agetty_options="--autologin YOURUSERACCOUNTHERE"`,
+which will automatically log you in. If you set your shell to fish like i told you to, the
+`~/.config/fish/conf.d/sway_tty_autostart.fish` script will automatically launch sway, and sway will launch hyprlock.
+
+If you want to change which tty this is spawned in, make sure to edit the `sway_tty_autostart.fish` script to reflect
+the right tty: `if [ (tty) = "/dev/tty7" ]`. You can probably figure out what to do for the agetty conf.d option.
+
+If you don't use agetty, well, read the damn manpage and figure it out on your own. This isn't daycare.
 
 ### delete my system
 
