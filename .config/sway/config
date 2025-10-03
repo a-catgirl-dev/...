@@ -48,7 +48,6 @@ exec pipewire-pulse
 exec wireplumber
 # exec activate-linux
 exec foot -s
-exec ~/.config/sway/init.sh
 
 bindsym $mod+a exec swaync-client -t
 
